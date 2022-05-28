@@ -1,0 +1,15 @@
+.option-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.option {
+    margin: 20px 40px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    background: #039201;
+    width: 30%;
+}
