@@ -1,11 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { ethers } from "ethers";
 import Login from "../Login/Login";
+import Dashboard from "../Dashboard/Dashboard";
 import "./App.css";
+import abi from "../../utils/Greenergy.json";
 
 const App = () => {
     const [currentAccount, setCurrentAccount] = useState("");
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    const contractAddress = "0xCa0fdD4de6a44344A0f260Bf8dBF8c75d83F4208";
+    const contractABI = abi.abi;
 
     const walletConnectionCheck = async () => {
         try {
@@ -24,25 +29,10 @@ const App = () => {
                 const account = accounts[0];
                 console.log("Found an authorized account: ", account);
                 setCurrentAccount(account);
+                setLoggedIn(true);
             } else {
                 console.log("No authorized account found!");
             }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const connectWallet = async () => {
-        try {
-            const { ethereum } = window;
-            if (!ethereum) {
-                alert("Get Metamask!");
-                return;
-            }
-
-            const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-            console.log("Connected ", accounts[0]);
-            setCurrentAccount(accounts[0]);
         } catch (error) {
             console.log(error);
         }
@@ -54,16 +44,31 @@ const App = () => {
 
     return (
         <div className='app-container'>
-            <h1>App</h1>
+            <h1>Greenergy Residential Society</h1>
             {/* If there is no currentAccount render this button */}
-            {!currentAccount && (
+            {/* {!currentAccount && (
                 <button className='btn connbtn' onClick={connectWallet}>
                     Connect Wallet
                 </button>
+            )} */}
+
+            {!currentAccount && (
+                <Login
+                    currentAccount={currentAccount}
+                    setCurrentAccount={setCurrentAccount}
+                    loggedIn={loggedIn}
+                    setLoggedIn={setLoggedIn}
+                />
             )}
 
             {/* If there's a connected account */}
-            {currentAccount && <Login />}
+            {currentAccount && (
+                <Dashboard
+                    currentAccount={currentAccount}
+                    contractAddress={contractAddress}
+                    contractABI={contractABI}
+                />
+            )}
         </div>
     );
 };

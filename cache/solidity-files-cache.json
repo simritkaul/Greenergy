@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "H:\\Blockchain\\greenergy\\contracts\\Greenergy.sol": {
-      "lastModificationDate": 1653762491137,
-      "contentHash": "36c82cf21ae3b7f7a49b088253d6f441",
+      "lastModificationDate": 1653850804292,
+      "contentHash": "1155d7c4e3bc700ba005c22dda7a1103",
       "sourceName": "contracts/Greenergy.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -30,7 +30,7 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.4"
       ],
       "artifacts": [
         "Greenergy"

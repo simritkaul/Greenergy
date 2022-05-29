@@ -13,3 +13,38 @@
     background: #039201;
     width: 30%;
 }
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.memberlist {
+    display: flex;
+    flex-direction: row;
+    width: 25%;
+    padding: 20px;
+    background: #229382;
+}
+
+.memberInfo {
+    display: flex;
+    flex-direction: column;
+    background: grey;
+    flex-wrap: wrap;
+}
+
+.requestlist {
+    display: flex;
+    flex-direction: row;
+    width: 25%;
+    padding: 20px;
+    background: #aa21b2;
+}
+
+.requestInfo {
+    display: flex;
+    flex-direction: column;
+    background: grey;
+    flex-wrap: wrap;
+}

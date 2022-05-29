@@ -1,15 +1,15 @@
-// SPDX-License-Identifier: Unlicenced
+// SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.4;
 
 contract Greenergy {
-    address public owner;
+    address payable public owner;
 
     struct Member {
         uint256 id;
         string name;
         string house;
-        address acc;
+        address payable acc;
         bool active;
     }
 
@@ -32,8 +32,10 @@ contract Greenergy {
 
     Request[] public Requests;
 
+    uint256 fee;
+
     constructor() {
-        owner = msg.sender;
+        owner = payable(msg.sender);
         addMembers();
     }
 
@@ -63,12 +65,11 @@ contract Greenergy {
 
     function addMemberWallet(uint256 _id) public {
         require(_id > 0 && _id <= memberCount, "Invalid ID");
-        require(Members[_id - 1].acc == address(0), "Wallet already linked");
         require(
             Members[_id - 1].active == true,
             "The member account is disabled"
         );
-        Members[_id - 1].acc = msg.sender;
+        Members[_id - 1].acc = payable(msg.sender);
         addToId[msg.sender] = _id;
     }
 
@@ -91,5 +92,28 @@ contract Greenergy {
         require(requested[addToId[msg.sender] - 1], "No active request exists");
         requested[addToId[msg.sender] - 1] = false;
         Requests[idmap[addToId[msg.sender] - 1]].reqStatus = false;
+    }
+
+    function payment() public payable {
+        require(
+            Members[addToId[msg.sender] - 1].active,
+            "Only active members have to pay the maintainance amount"
+        );
+        // if (requested[addToId[msg.sender] - 1]) {
+        //     fee = 0.008 ether;
+        // } else {
+        //     fee = 0.002 ether;
+        // }
+
+        fee = 0.005 ether;
+        require(msg.value == fee, "Insufficient to cover fees");
+    }
+
+    function getMembers() public view returns (Member[] memory) {
+        return Members;
+    }
+
+    function getRequests() public view returns (Request[] memory) {
+        return Requests;
     }
 }

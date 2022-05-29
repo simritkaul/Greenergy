@@ -5,51 +5,71 @@ import "./Login.css";
 import Dashboard from "../Dashboard/Dashboard";
 import abi from "../../utils/Greenergy.json";
 
-const Login = () => {
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [inputId, setInputId] = useState("");
+const Login = ({ currentAccount, setCurrentAccount, loggedIn, setLoggedIn }) => {
+    const [inputId, setInputId] = useState(0);
     const [inputName, setInputName] = useState("");
     const [inputHouse, setInputHouse] = useState("");
 
-    const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+    const contractAddress = "0xCa0fdD4de6a44344A0f260Bf8dBF8c75d83F4208";
     const contractABI = abi.abi;
 
     const handleInput1 = (e) => {
         // Selecting the input element and get its value
         const inputVal = e.target.value;
+        console.log(inputVal);
         setInputId(inputVal.toString());
     };
 
     const handleInput2 = (e) => {
-        // Selecting the input element and get its value
         const inputVal = e.target.value;
+        console.log(inputVal);
         setInputName(inputVal.toString());
     };
 
     const handleInput3 = (e) => {
-        // Selecting the input element and get its value
         const inputVal = e.target.value;
+        console.log(inputVal);
         setInputHouse(inputVal.toString());
     };
 
     const connectToMembership = async () => {
         try {
             const { ethereum } = window;
-            if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
-                const GreenergyContract = new ethers.Contract(contractAddress, contractABI, signer);
-
-                // Executing the login
-                let loggingTxn = await GreenergyContract.addMemberWallet(1);
-                console.log("Mining...", loggingTxn.hash);
-                await loggingTxn.wait();
-                console.log("Mined: ", loggingTxn.hash);
-
-                setLoggedIn(true);
-            } else {
-                console.log("Ethereum object doesn't exist");
+            if (!ethereum) {
+                alert("Get Metamask!");
+                return;
             }
+
+            const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+
+            console.log("Connected ", accounts[0]);
+
+            const provider = new ethers.providers.Web3Provider(ethereum);
+            const signer = provider.getSigner();
+            const GreenergyContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+            let memberInfo = await GreenergyContract.Members(inputId - 1);
+            if (!memberInfo || !memberInfo.active) {
+                alert("Member with this Id does not exist");
+                return;
+            }
+
+            if (memberInfo.name != inputName || memberInfo.house != inputHouse) {
+                alert("Incorrect credentials");
+                return;
+            }
+
+            // Executing the login
+            let loggingTxn = await GreenergyContract.addMemberWallet(inputId);
+            console.log("Mining...", loggingTxn.hash);
+            await loggingTxn.wait();
+            console.log("Mined: ", loggingTxn.hash);
+
+            memberInfo = await GreenergyContract.Members(inputId - 1);
+            console.log("From solidity Members List: ", memberInfo.acc);
+
+            setCurrentAccount(accounts[0]);
+            setLoggedIn(true);
         } catch (error) {
             console.log(error);
         }
@@ -93,7 +113,13 @@ const Login = () => {
                 </div>
             )}
             {/* When logged in */}
-            {loggedIn && <Dashboard contractAddress={contractAddress} contractAbi={contractABI} />}
+            {loggedIn && (
+                <Dashboard
+                    currentAccount={currentAccount}
+                    contractAddress={contractAddress}
+                    contractABI={contractABI}
+                />
+            )}
         </div>
     );
 };
