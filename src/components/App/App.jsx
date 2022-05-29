@@ -1,15 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import Dashboard from "../Dashboard/Dashboard";
+import Login from "../Login/Login";
 import "./App.css";
-// import abi from '../utils/Greenergy.json';
 
 const App = () => {
     const [currentAccount, setCurrentAccount] = useState("");
-
-    // const contractAddress = "0x7Cdb8710360eAe7b67197488F3F250c1c09B3DDe";
-    // const contractABI = abi.abi;
 
     const walletConnectionCheck = async () => {
         try {
@@ -65,8 +61,9 @@ const App = () => {
                     Connect Wallet
                 </button>
             )}
+
             {/* If there's a connected account */}
-            {currentAccount && <Dashboard />}
+            {currentAccount && <Login />}
         </div>
     );
 };

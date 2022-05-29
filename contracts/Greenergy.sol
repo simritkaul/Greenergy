@@ -22,6 +22,8 @@ contract Greenergy {
     mapping(uint256 => bool) requested; // to check if this account has already made a request
     mapping(uint256 => uint256) idmap; // to update details of an account if the connection is removed
 
+    mapping(address => uint256) addToId;
+
     uint256 public memberCount;
 
     uint256 public reqCount;
@@ -67,31 +69,27 @@ contract Greenergy {
             "The member account is disabled"
         );
         Members[_id - 1].acc = msg.sender;
+        addToId[msg.sender] = _id;
     }
 
-    function requestSolar(uint256 _id) public {
+    function requestSolar() public {
         require(
-            Members[_id - 1].acc == msg.sender,
-            "Members must request using their own accounts"
+            !requested[addToId[msg.sender] - 1],
+            "An active request already exists"
         );
-        require(!requested[_id - 1], "An active request already exists");
         Request memory req;
-        req.memid = _id;
+        req.memid = addToId[msg.sender];
         req.reqid = reqCount + 1;
-        idmap[_id] = reqCount + 1;
+        idmap[addToId[msg.sender]] = reqCount + 1;
         req.reqStatus = true;
         Requests.push(req);
-        requested[_id - 1] = true;
+        requested[addToId[msg.sender] - 1] = true;
         reqCount++;
     }
 
-    function stopRequest(uint256 _id) public {
-        require(
-            Members[_id - 1].acc == msg.sender,
-            "Members must stop request using their own accounts"
-        );
-        require(requested[_id - 1], "No active request exists");
-        requested[_id - 1] = false;
-        Requests[idmap[_id - 1]].reqStatus = false;
+    function stopRequest() public {
+        require(requested[addToId[msg.sender] - 1], "No active request exists");
+        requested[addToId[msg.sender] - 1] = false;
+        Requests[idmap[addToId[msg.sender] - 1]].reqStatus = false;
     }
 }

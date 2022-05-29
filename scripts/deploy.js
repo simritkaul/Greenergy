@@ -5,7 +5,7 @@ const main = async () => {
     console.log("Account Balance: ", accountBalance.toString());
 
     const GreenergyContractFactory = await hre.ethers.getContractFactory("Greenergy");
-    const GreenergyContract = await GreenergyContractFactory.deploy({ value: hre.ethers.utils.parseEther("0.005") });
+    const GreenergyContract = await GreenergyContractFactory.deploy();
     await GreenergyContract.deployed();
     console.log("GreenergyContract deployed at: ", GreenergyContract.address);
 };
