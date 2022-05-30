@@ -92,6 +92,7 @@ const Dashboard = ({ currentAccount, contractAddress, contractABI }) => {
                 console.log("Ethereum object doesn't exist");
             }
         } catch (error) {
+            alert("Error! Try disconnecting your wallet and refresh the page to login again");
             console.log(error);
         }
     };
@@ -155,26 +156,26 @@ const Dashboard = ({ currentAccount, contractAddress, contractABI }) => {
 
     return (
         <div className='dashboard-container'>
-            <h1>Dashboard</h1>
+            <h1 className='dashboard-title'>Dashboard</h1>
 
             <div className='option-container'>
                 <div className='option'>
                     <h2>Request Solar Energy</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, cum?</p>
+                    <p>Click here to request a connection to your home</p>
                     <button className='btn optionbtn' onClick={solarRequest}>
                         Go
                     </button>
                 </div>
                 <div className='option'>
                     <h2>Payments</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, cum?</p>
+                    <p>Click here to pay your monthly maintainance fee</p>
                     <button className='btn optionbtn' onClick={payMoney}>
                         Go
                     </button>
                 </div>
                 <div className='option'>
                     <h2>Stop Subcription of Solar Energy</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, cum?</p>
+                    <p>Click here to cancel your connection</p>
                     <button className='btn optionbtn' onClick={stopRequest}>
                         Go
                     </button>
@@ -183,7 +184,13 @@ const Dashboard = ({ currentAccount, contractAddress, contractABI }) => {
 
             <div className='info-container'>
                 <div className='memberlist'>
-                    <h2>These are members</h2>
+                    <h2 className='listHead'>Greenergy Members</h2>
+                    <div key={99} className='memberInfoHead'>
+                        <p className='head'>Name</p>
+                        <p className='head'>House</p>
+                        <p className='head'>Wallet</p>
+                        <p className='head'>Present Status</p>
+                    </div>
                     {memberList.map((member, index) => {
                         return (
                             <div key={index} className='memberInfo'>
@@ -196,7 +203,12 @@ const Dashboard = ({ currentAccount, contractAddress, contractABI }) => {
                     })}
                 </div>
                 <div className='reqlist'>
-                    <h2>These are requests</h2>
+                    <h2 className='listHead'>Solar Energy Requests</h2>
+                    <div key={199} className='requestInfoHead'>
+                        <p className='head'>Request ID</p>
+                        <p className='head'>Member ID</p>
+                        <p className='head'>Status</p>
+                    </div>
                     {requestList.map((request, index) => {
                         return (
                             <div key={index + 100} className='requestInfo'>

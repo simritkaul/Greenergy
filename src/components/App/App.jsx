@@ -9,7 +9,7 @@ const App = () => {
     const [currentAccount, setCurrentAccount] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
 
-    const contractAddress = "0xCa0fdD4de6a44344A0f260Bf8dBF8c75d83F4208";
+    const contractAddress = "0x39E61602388E5d9DF46D8df07157068A3C2E3d60";
     const contractABI = abi.abi;
 
     const walletConnectionCheck = async () => {
@@ -29,7 +29,7 @@ const App = () => {
                 const account = accounts[0];
                 console.log("Found an authorized account: ", account);
                 setCurrentAccount(account);
-                setLoggedIn(true);
+                // setLoggedIn(true);
             } else {
                 console.log("No authorized account found!");
             }
@@ -44,7 +44,7 @@ const App = () => {
 
     return (
         <div className='app-container'>
-            <h1>Greenergy Residential Society</h1>
+            <h1 className='title'>Greenergy Residential Society</h1>
             {/* If there is no currentAccount render this button */}
             {/* {!currentAccount && (
                 <button className='btn connbtn' onClick={connectWallet}>

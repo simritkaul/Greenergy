@@ -10,41 +10,127 @@
     padding: 30px;
     display: flex;
     flex-direction: column;
-    background: #039201;
+    background: #0fbf0c;
     width: 30%;
+    border-radius: 10px;
 }
 
 .info-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .memberlist {
     display: flex;
-    flex-direction: row;
-    width: 25%;
+    flex-direction: column;
+    width: 90%;
     padding: 20px;
-    background: #229382;
+}
+
+.dashboard-title {
+    text-align: center;
+}
+
+.listHead {
+    text-align: center;
 }
 
 .memberInfo {
     display: flex;
-    flex-direction: column;
-    background: grey;
+    flex-direction: row;
+    justify-content: space-between;
+    background: greenyellow;
     flex-wrap: wrap;
+    margin: 10px 0;
+    padding: 10px;
 }
 
-.requestlist {
+.memberInfoHead {
     display: flex;
     flex-direction: row;
-    width: 25%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 10px;
+    padding: 10px;
+}
+
+.memberInfo > p {
+    margin: 10px 20px;
+}
+
+.reqlist {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
     padding: 20px;
-    background: #aa21b2;
 }
 
 .requestInfo {
     display: flex;
-    flex-direction: column;
-    background: grey;
+    flex-direction: row;
+    justify-self: space-evenly;
+    justify-content: space-between;
+    background: greenyellow;
     flex-wrap: wrap;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+}
+
+.requestInfoHead {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 10px;
+    padding: 10px;
+}
+
+.requestInfo > p {
+    margin: 10px 80px;
+}
+
+.btn {
+    width: 60%;
+    align-self: center;
+    justify-self: center;
+    padding: 10px 10px;
+    border-radius: 10px;
+    border: #0fbf0c;
+    background-color: #a0e69f;
+}
+
+.btn:hover {
+    cursor: pointer;
+    background-color: white;
+    transition: 0.3s;
+}
+
+@media only screen and (max-width: 640px) {
+    .option {
+        margin: 20px 40px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        background: #0fbf0c;
+        width: 80%;
+        border-radius: 10px;
+    }
+
+    .memberlist {
+        display: flex;
+        flex-direction: column;
+        width: 98%;
+        padding: 20px;
+    }
+
+    .memberInfo > p {
+        margin: 10px 5px;
+    }
+
+    .requestInfo > p {
+        margin: 10px 20px;
+    }
 }
